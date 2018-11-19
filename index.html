@@ -1,24 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/style.css">
-    <title></title>
+    <title>Palendrome</title>
   </head>
   <body>
-    <h1>Coin Flip</h1>
-    <form action="">
-      <!-- heads -->
-      <input type="radio" id="headInput"
-     name="flip" value="heads">
-    <label for="headInput">Heads</label>
-      <!-- tails -->
-    <input type="radio" id="tailInput"
-     name="flip" value="tails">
-    <label for="tailInput">Tails</label>
-      <!-- submit -->
-    <button id="submitGuess" type="submit">Submit</button>
+    <form action="/word" method="post">
+      <input type="text" id="word" name="word"/>
+      <input type="submit" />
     </form>
-    <script src="js/main.js"></script>
+    <script type="text/javascript" src="main.js"></script>
   </body>
 </html>

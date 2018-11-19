@@ -1,43 +1,24 @@
-const http = require('http')
-const fs = require('fs')
-const url = require('url')
-let querystring = require('querystring')
-const figlet = require('figlet')
+const express         = require('express')
+const app             = express()
+const port            = process.env.PORT || 3000
+const bodyParser      = require('body-parser')
 
-const server = http.createServer(function(req, res) {
-  const page = url.parse(req.url).pathname
-  let params = querystring.parse(url.parse(req.url).query)
-  console.log(page)
-  if (page == '/') {
-    fs.readFile('index.html', function(err, data) {
-      res.writeHead(200, {'Content-Type': 'text/html'})
-      res.write(data)
-      console.log(data)
-      res.end()
-    });
-  }
-  else if (page == '/css/style.css'){
-    fs.readFile('css/style.css', function(err, data) {
-      res.write(data)
-      res.end()
-    });
-  }else if (page == '/js/main.js'){
-    fs.readFile('js/main.js', function(err, data) {
-      res.writeHead(200, {'Content-Type': 'text/javascript'})
-      res.write(data)
-      res.end()
-    });
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static('public'))
+
+app.get('/',(req,res) => {
+  res.sendFile(__dirname + '/index.html')
+});
+
+app.post('/word',(req, res) => {
+  const word = req.body.word
+  if(word == word.split('').reverse().join('')){
+    return res.send('Its a palindrome')
   }else{
-    figlet('404!!', function(err, data) {
-      if (err) {
-          console.log('Something went wrong...')
-          console.dir(err)
-          return
-      }
-      res.write(data)
-      res.end()
-    })
+    return res.send('Not a palindrome')
   }
-})
+});
 
-server.listen(8000)
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`)
+})
